@@ -1,0 +1,6 @@
+
+POST http://localhost:5000/api/text/text_summary
+Content-Type: application/json
+{
+    "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod."
+}
