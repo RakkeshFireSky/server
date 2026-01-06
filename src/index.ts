@@ -1,14 +1,14 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import text_Summarize from '../router/api/text_summarize'
-import auth from '../router/api/auth'
-import { connectDB } from '../utils/db'
+import text_Summarize from '../router/api/text_summarize.ts'
+import auth from '../router/api/auth.ts'
+import { connectDB } from '../utils/db.ts'
 import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express()
-connectDB()
+await connectDB()
 app.use((req, res, next) => {
   // 1. Get the requesting origin
   const origin: any = req.headers.origin;
