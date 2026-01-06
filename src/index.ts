@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express()
+connectDB()
 app.use((req, res, next) => {
   // 1. Get the requesting origin
   const origin: any = req.headers.origin;
@@ -46,7 +47,7 @@ app.use((req, res, next) => {
 app.use(express.json())
 app.use(cookieParser())
 
-connectDB()
+
 
 app.use('/api/text', text_Summarize)
 app.use('/api', auth)
