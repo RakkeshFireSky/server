@@ -1,9 +1,9 @@
-import { User } from "../../models/User.ts";
+import { User } from "../../models/User";
 import {Response, Request} from "express";
 import bcrypt from "bcrypt";
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { authMiddleware } from "../../middleware/authMiddleware.ts";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 
 

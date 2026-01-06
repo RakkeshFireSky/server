@@ -10,9 +10,15 @@ if (!DB_URL) {
 }
  
 
-export const connectDB = async () => {
+export const connectDB = async (): Promise<void> => {
+  mongoose.set('bufferCommands', false);
+
+  if (mongoose.connection.readyState === 1) return;
   try {
-    await mongoose.connect(DB_URL);
+    await mongoose.connect(DB_URL, {
+      serverSelectionTimeoutMS: 5000,
+      maxPoolSize: 10,
+    });
     console.log("Connected to MongoDB");
   } catch (error) {
     console.log("MongoDB connection error", error);
