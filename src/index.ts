@@ -6,6 +6,7 @@ import auth from '../router/api/auth'
 import { connectDB } from '../utils/db'
 import cookieParser from "cookie-parser";
 import { corsMiddleware } from "../config/cors";
+import mongoose from "mongoose";
 dotenv.config();
 
 const app = express();
@@ -16,7 +17,13 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-connectDB();
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    await connectDB();
+  }
+  next();
+});
+
 app.use(express.json())
 app.use(cookieParser())
 

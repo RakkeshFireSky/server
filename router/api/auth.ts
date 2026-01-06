@@ -12,13 +12,18 @@ const router = Router();
 router.post('/sign-up', async(req: Request, res: Response) => {
     try {
         const {username, email, password} = req.body;
+
+        const fieldErrors: any = {}
         if(!username || !email || !password) {
             return res.status(400).json({message: "Please provide all required fields"});
         }
+
+
         const existingUser = await User.findOne({email})
 
         if(existingUser) {
-            return res.status(400).json({message: "User already exists"});
+            fieldErrors.email = "User already exists";
+            return res.status(400).json({message: "User already exists", fieldErrors});
         }
 
         const hashPassword = await bcrypt.hash(password, 10);
@@ -72,8 +77,8 @@ router.post("/sign-in", async (req: Request, res: Response) => {
 
     res.cookie("accessToken", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000
     })
     
@@ -87,6 +92,16 @@ router.post("/sign-in", async (req: Request, res: Response) => {
 router.get("/me", authMiddleware, async (req: Request, res: Response) => {
   const user = await User.findById(req.user!.id).select("-password")
   return res.status(200).json({message: "User found", user})
+})
+
+router.post('/logout', (req: Request, res: Response) => {
+    res.clearCookie('accessToken', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: '/',
+    });
+    return res.status(200).json({message: "Logged out successfully"})
 })
 
 export default router;
