@@ -11,7 +11,7 @@ dotenv.config();
 
 const app = express();
 app.use(cors({
-  origin: ["http://localhost:3000","https://front-livid-nine.vercel.app"],
+  origin: ["http://localhost:3000","https://front-livid-nine.vercel.app","https://front-3vxayrs5r-rakkis-projects-bd4d1705.vercel.app"],
    credentials: true,  // Required for cookies/auth
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
