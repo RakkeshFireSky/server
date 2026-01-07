@@ -66,6 +66,7 @@ router.post("/sign-in", async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Password Invalid" });
     }
 
+
     const tokenData = {
         id: existingUser._id,
         Username: existingUser.username,
@@ -81,7 +82,7 @@ router.post("/sign-in", async (req: Request, res: Response) => {
       sameSite: "none",
       maxAge: 24 * 60 * 60 * 1000
     })
-    
+    console.log("SIGNUP HIT EXPRESS");
     return res.status(201).json({message: "Sign-in successful", token, tokenData})
   } catch (error) {
     return res.status(500).json({ message: "Internal server error", error });
